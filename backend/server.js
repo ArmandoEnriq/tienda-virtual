@@ -16,13 +16,14 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a la tienda virtual!');
+});
+
 // Rutas
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 
-app.get('/', (req, res) => {
-  res.send('¡Bienvenido a la tienda virtual!');
-});
 
 // Verificar conexión a MySQL
 app.get('/test-db', (req, res) => {
