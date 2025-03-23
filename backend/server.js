@@ -4,6 +4,9 @@ const dotenv = require('dotenv'); //  // Cargar variables de entorno desde .env
 const connection = require('./database/mysql'); // Importa la conexión a MySQL
 const connectMongo = require('./database/mongodb'); // Conexion MongoDB
 
+// Routes
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -12,6 +15,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// Rutas
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('¡Bienvenido a la tienda virtual!');
