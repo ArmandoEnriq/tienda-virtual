@@ -26,15 +26,28 @@ router.get('/:id', authMiddleware, async (req, res) => { // Definimos una ruta q
   }
 });
 
-// Crear un nuevo producto
-router.post('/', authMiddleware, async (req, res) => { // Definimos una ruta que maneja post y su enlace pero primero verifica si tienes token de verificacion
-  try {
-    const { nombre, descripcion, precio } = req.body; // Obtenemos nombre, descripcion, precio del cuerpo de la solicitud para post
-    const productId = await Product.create(nombre, descripcion, precio); // Usamos el metodo create de product para crear un producto con nombre, descripcion, precio
-    res.status(201).json({ id: productId }); // Devuelve el id si se crea
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+// Crear un nuevo producto (solo admin y encargado)
+router.post('/', authMiddleware, (req, res) => { // Definimos una ruta que maneja post y su enlace pero primero verifica si tienes token de verificacion
+    if (req.user.rol !== 'admin' && req.user.rol !== 'encargado') { // Verificamos que el rol sea admin o encargado
+      return res.status(403).json({ message: 'Acceso denegado' }); // Sino es ninguno se le deniega el acceso
+    }
+    // Lógica para crear un producto
+  });
+  
+  // Actualizar un producto (solo admin y encargado)
+  router.put('/:id', authMiddleware, (req, res) => {
+    if (req.user.rol !== 'admin' && req.user.rol !== 'encargado') { // Verificamos que el rol sea admin o encargado
+      return res.status(403).json({ message: 'Acceso denegado' });
+    }
+    // Lógica para actualizar un producto
+  });
+  
+  // Eliminar un producto (solo admin)
+  router.delete('/:id', authMiddleware, (req, res) => {
+    if (req.user.rol !== 'admin') { // Verificamos que el rol sea admin 
+      return res.status(403).json({ message: 'Acceso denegado' });
+    }
+    // Lógica para eliminar un producto
+  });
 
 module.exports = router;
