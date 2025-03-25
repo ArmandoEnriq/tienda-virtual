@@ -1,6 +1,7 @@
 const express = require('express'); //Framework para manejar el servidor.
 const User = require('../models/userModel'); //Manejo de sql usuarios
 const bcrypt = require('bcryptjs'); // Para encriptar contraseñas.
+const authMiddleware = require('../middlewares/authMiddleware'); // Uso de un token de verificacion
 const router = express.Router(); // Usaremos express para manejo de rutas
 
 // Registrar un nuevo usuario
@@ -14,6 +15,22 @@ router.post('/register', async (req, res) => { //Definimos una ruta que maneja p
   }
 });
 
+// Registrar un nuevo usuario admin si eres admin
+router.post('/register-admin', authMiddleware, async (req, res) => { //Definimos una ruta que maneja post y su enlace
+    if (req.user.rol !== 'admin') { // Verificamos en el token que su rol sea admin
+      console.log(req.user.rol)
+      return res.status(403).json({ message: 'Solo un admin puede registrar otros admins' });
+    }
+    try {
+      const { nombre, email, password } = req.body; // Buscamos en el cuerpo los valores
+      const userId = await User.create(nombre, email, password, 'admin'); // Usamos el metodo create para crear y por defecto rol es admin
+      res.status(201).json({ id: userId, message: 'Admin registrado exitosamente' });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+);
+
 // Iniciar sesión
 router.post('/login', async (req, res) => { // Creamos una ruta para post con su enlace
   try {
@@ -24,7 +41,7 @@ router.post('/login', async (req, res) => { // Creamos una ruta para post con su
     }
     // Generar un token JWT
     const token = User.generateToken(user); // Usa el metodo de user para generar un token
-    res.json({ token }); // Devuelve el token en formato json
+    res.json({ token, rol: user.rol }); // Devuelve el token en formato json
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
