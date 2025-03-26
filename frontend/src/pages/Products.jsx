@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/api';
-import './Products';
+import { useCart } from '../context/CartContext'; // Usamos el contexto global del carrito
+import '../styles/Products.css';
 
 export const Products = () => {
   const [products, setProducts] = useState([]);
+  const { addToCart } = useCart(); // Del contexto global usamos la funcion de agregar
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -26,7 +28,7 @@ export const Products = () => {
             <img src={product.imagen} alt={product.nombre} />
             <h3>{product.nombre}</h3>
             <p>${product.precio}</p>
-            <button>Añadir al carrito</button>
+            <button onClick={() => addToCart(product)}>Añadir al carrito</button>
           </div>
         ))}
       </div>

@@ -1,0 +1,100 @@
+.not-found-container {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .not-found-content {
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    color: #f8f9fa;
+    text-shadow: 4px 4px 0 #dee2e6;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+  
+  .error-title {
+    font-size: 2.5rem;
+    color: #343a40;
+    margin-bottom: 1.5rem;
+  }
+  
+  .error-message {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .back-button, .home-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .back-button {
+    background: #f8f9fa;
+    color: #495057;
+    border: 2px solid #dee2e6;
+  }
+  
+  .home-button {
+    background: #4dabf7;
+    color: white;
+    border: 2px solid #4dabf7;
+  }
+  
+  .back-button:hover {
+    background: #e9ecef;
+  }
+  
+  .home-button:hover {
+    background: #339af0;
+    border-color: #339af0;
+  }
+  
+  .not-found-illustration {
+    flex: 1;
+    max-width: 500px;
+    padding-left: 3rem;
+  }
+  
+  .not-found-illustration svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .not-found-container {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .action-buttons {
+      justify-content: center;
+    }
+    
+    .not-found-illustration {
+      padding-left: 0;
+      margin-top: 3rem;
+      max-width: 300px;
+    }
+  }

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Para cambios de pagina
 import '../styles/Home.css'; // Archivo de estilos específico
 
 export const Home = () => {

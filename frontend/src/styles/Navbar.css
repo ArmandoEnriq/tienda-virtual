@@ -20,3 +20,22 @@
   .navbar-links a:hover {
     opacity: 0.8;
   }
+  .cart-link {
+    position: relative;
+  }
+  
+  .cart-link::after {
+    content: attr(data-count);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+  }
