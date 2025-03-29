@@ -6,6 +6,8 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Cart } from './components/Cart'; // Asegúrate de importar el componente Cart
 import NotFound from './pages/NotFound';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Checkout } from './pages/Checkout';
 
 function App() {
   return (
@@ -15,8 +17,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
+        <Route path="/checkout" element={ <ProtectedRoute> <Checkout /> </ProtectedRoute> } />
         <Route path="/productos" element={<Products />} />
-        <Route path="/cart" element={<Cart />} /> {/* ¡Nueva ruta! */}
+        <Route path="/cart" element={ <ProtectedRoute> <Cart /> </ProtectedRoute> } />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
