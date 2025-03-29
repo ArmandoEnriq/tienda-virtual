@@ -7,8 +7,9 @@ export function AuthProvider({ children }) {
     return !!localStorage.getItem('token'); // El !! es un patrón común en JavaScript para forzar la conversión a booleano 
   });
 
-  const login = (token) => { // Si se inicia sesion guardamos el token en localStore
-    localStorage.setItem('token', token);
+  const login = (data) => { // Si se inicia sesion guardamos el token en localStore
+    localStorage.setItem('token', data.token); // Guardamos el token 
+    localStorage.setItem('rol', data.rol); // Guardamos el rol
     setIsAuthenticated(true); // decimos que es verdadero que hay una sesion
   };
 

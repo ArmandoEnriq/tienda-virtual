@@ -15,7 +15,7 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await loginUser({ email, password });
-      login(response.data.token); // Actualiza el estado de autenticación guardando el token 
+      login(response.data); // Actualiza el estado de autenticación guardando el token 
       navigate('/productos'); // Redirigir a la página de productos
     } catch (err) {
       setError('Credenciales incorrectas');
