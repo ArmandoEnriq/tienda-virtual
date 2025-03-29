@@ -21,6 +21,7 @@ export const loginUser = (credentials) => API.post('/users/login', credentials);
 export const registerUser = (userData) => API.post('/users/register', userData);
 // Rutas Productos
 export const fetchProducts = () => API.get('/products');
+export const fetchProduct = (id) => API.get(`/products/${id}`);
 // Rutas de creacion modificacion y eliminacion de productos
 export const createProduct = (product) => API.post('/products', product);
 export const updateProduct = (id, product) => API.put(`/products/${id}`, product);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchProducts, createProduct, updateProduct } from '../api/api';
+import { createProduct, updateProduct,fetchProduct } from '../api/api';
 import '../styles/ProductForm.css';
 
 export const ProductForm = () => {
@@ -17,7 +17,7 @@ export const ProductForm = () => {
   useEffect(() => {
     if (id) {
       const loadProduct = async () => {
-        const response = await fetchProducts(id);
+        const response = await fetchProduct(id);
         setProduct({
           nombre: response.data.nombre || '',
           descripcion: response.data.descripcion || '',

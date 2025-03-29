@@ -33,7 +33,7 @@ router.post('/', authMiddleware, async (req, res) => { // Definimos una ruta que
     }
     // Lógica para crear un producto
     try {
-        const { nombre, descripcion, precio, cantidad } = req.body;
+        const { nombre, descripcion, precio, cantidad, img} = req.body;
         const imagen = req.file ? req.file.path : null; // URL de la imagen en Cloudinary
   
         const productId = await Product.create(nombre, descripcion, precio, cantidad, imagen);
