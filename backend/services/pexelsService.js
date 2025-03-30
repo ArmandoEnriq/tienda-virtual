@@ -17,6 +17,7 @@ const searchImage = async (query) => {
     console.error('Error al buscar imagen en Pexels:', error);
     return null;
   }
+
 };
 
 module.exports = { searchImage };

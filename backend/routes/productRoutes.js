@@ -2,6 +2,7 @@ const express = require('express'); // Framework para manejar el servidor
 const Product = require('../models/ProductModel'); // Consultas de productos
 const authMiddleware = require('../middlewares/authMiddleware'); // Uso de un token de verificacion
 const router = express.Router(); // Uso de rutas con express
+const { searchImage } = require('../services/pexelsService');
 
 // Obtener todos los productos
 router.get('/', async (req, res) => { // Definimos una ruta que maneja get y su enlace pero primero verifica si tienes token de verificacion
@@ -33,9 +34,7 @@ router.post('/', authMiddleware, async (req, res) => { // Definimos una ruta que
     }
     // Lógica para crear un producto
     try {
-        const { nombre, descripcion, precio, cantidad, img} = req.body;
-        const imagen = req.file ? req.file.path : null; // URL de la imagen en Cloudinary
-  
+        const { nombre, descripcion, precio, cantidad, imagen} = req.body;
         const productId = await Product.create(nombre, descripcion, precio, cantidad, imagen);
         res.status(201).json({ id: productId });
       } catch (err) {
@@ -66,18 +65,8 @@ router.post('/', authMiddleware, async (req, res) => { // Definimos una ruta que
     if (req.user.rol !== 'admin') { // Verificamos que el rol sea admin 
       return res.status(403).json({ message: 'Solo el admin puede eliminar productos' });
     }
-    // Lógica para eliminar un producto
-    const { id } = req.params;
-
-      // Opcional: Eliminar imagen de Cloudinary
-      const producto = await Product.getById(id);
-      if (producto.imagen) {
-        const publicId = producto.imagen.split('/').pop().split('.')[0]; // Extrae el publicId de la URL de Cloudinary (ej: de https://res.cloudinary.com/.../tienda-virtual/abc123.jpg extrae abc123).
-        await cloudinary.uploader.destroy(`tienda-virtual/${publicId}`); // Elimina la imagen con cloudinary.uploader.destroy.
-      }
-
       // Eliminar producto de la base de datos
-      const deletedRows = await Product.delete(id);
+      const deletedRows = await Product.delete(req.params.id);
       if (deletedRows === 0) { // Si no devuelve numero de filas eliminadas manda error
         return res.status(404).json({ message: 'Producto no encontrado' });
       }

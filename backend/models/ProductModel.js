@@ -27,9 +27,7 @@ Product.getById = (id) => { // Creamos el metodo getById que recibe el id del pr
 
 // Metodo para crear un nuevo producto
 Product.create = async (nombre, descripcion, precio, cantidad, imagen) => { // Creamos el metodo create que recibe el nombre, descripcion, precio, cantidad e imagen del producto
-  if (imagen === null) {
-  const imagen = await searchImage(nombre); // Busca automáticamente una imagen basada en el nombre del producto
-  }
+  imagen = await searchImage(nombre); // Busca automáticamente una imagen basada en el nombre del producto
   return new Promise((resolve, reject) => { // El metodo devuelve una promesa
     const query = 'INSERT INTO productos (nombre, descripcion, precio, cantidad, imagen) VALUES (?, ?, ?, ?, ?)'; // Consulta sql
     connection.query(query, [nombre, descripcion, precio, cantidad, imagen], (err, results) => { // conexion a mysql y consulta del sql
