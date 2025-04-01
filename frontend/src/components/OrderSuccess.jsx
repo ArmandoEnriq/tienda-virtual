@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import '../styles/OrderSuccess.css'
 
 export const OrderSuccess = () => {
   return (

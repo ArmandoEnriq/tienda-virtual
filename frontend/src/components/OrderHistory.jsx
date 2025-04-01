@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { getUserOrders } from '../api/api';
-import '../styles/Orders.css';
+import '../styles/OrderHistory.css';
 
 export const OrderHistory = () => {
-  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUserId] = useState(null); // <-- Añade este estado
+
+  useEffect(() => {
+    // Obtén el ID del usuario del localStorage correctamente
+    const userid = localStorage.getItem('id') // Asume que guardas el usuario completo
+    if (userid) {
+      setUserId(userid); // <-- Actualiza el estado con el ID
+    }
+  }, []);
 
   useEffect(() => {
     const fetchOrders = async () => {
-        console.log(user)
       if (user) {
         try {
           const response = await getUserOrders(user);
@@ -35,10 +41,10 @@ export const OrderHistory = () => {
         <p>No hay pedidos registrados</p>
       ) : (
         <div className="orders-list">
-          {orders.map(order => (
+          {orders.map((order, index) => (
             <div key={order.id} className="order-card">
               <div className="order-header">
-                <h3>Pedido # {order.id}</h3>
+                <h3>Pedido # {index + 1}</h3>
                 <p>Fecha: {new Date(order.fecha).toLocaleDateString()}</p>
                 <p>Total: ${order.total}</p>
               </div>

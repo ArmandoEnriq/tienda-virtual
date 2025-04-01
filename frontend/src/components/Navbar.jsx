@@ -18,6 +18,7 @@ export const Navbar = () => {
               <Link to="/admin/products" className="admin-link"> Administrar </Link>
               )}
               <Link to="/cart">Carrito ({cart.length})</Link>
+              <Link to="/orders">Pedidos</Link>
               <button onClick={() => { localStorage.removeItem('token'); localStorage.removeItem('rol'); window.location.reload();}}>Cerrar Sesión</button>
             </>
               ) : ( // sino te saldra iniciar sesion

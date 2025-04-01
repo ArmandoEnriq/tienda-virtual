@@ -12,7 +12,7 @@ export const Checkout = () => {
   const handleSubmit = async () => {
     try {
       const orderData = {
-        usuario_id: user,
+        usuario_id: localStorage.getItem('id'),
         total: getCartTotal(),
         items: cart.map(item => ({
           productId: item.product.id,
@@ -36,7 +36,6 @@ export const Checkout = () => {
 
   // Función para obtener el nombre seguro
   const getItemName = (item) => {
-    console.log(user)
     return item.nombre || item.product?.nombre || 'Producto sin nombre';
   };
 
