@@ -10,6 +10,8 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Checkout } from './pages/Checkout';
 import { AdminProducts } from './pages/AdminProducts';
 import { ProductForm } from './components/ProductForm';
+import { OrderHistory } from './components/OrderHistory';
+import { OrderSuccess } from './components/OrderSuccess';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/productos" element={<Products />} /> {/*Ruta (pagina) de productos*/}
         <Route path="/cart" element={ <ProtectedRoute> <Cart /> </ProtectedRoute> } /> {/*Ruta (pagina) de carrito solo si estas iniciado en sesion*/}
         <Route path="/checkout" element={ <ProtectedRoute> <Checkout /> </ProtectedRoute> } /> {/*Ruta (pagina) para resumen y pago solo si estas iniciado en sesion*/}
+        <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+        <Route path="/orders/success" element={<OrderSuccess />} />
         <Route path="*" element={<NotFound />} /> {/*Ruta (pagina) Sino encuentra nada en la pagina dada*/}
         <Route path="/admin/products" element={ <ProtectedRoute allowedRoles={['admin', 'encargado']}> <AdminProducts /> </ProtectedRoute>} /> {/*Ruta (pagina) para administrar los productos si estas iniciado en sesion y cumples con el rol*/}
         <Route path="/admin/products/new" element={ <ProtectedRoute allowedRoles={['admin', 'encargado']}> <ProductForm /> </ProtectedRoute>} />{/*Ruta (pagina) para agregar productos si estas iniciado en sesion y cumples con el rol*/}

@@ -24,4 +24,31 @@ Order.getByUserId = (usuario_id) => { // Creamos el metodo getByUser que recibe 
   });
 };
 
+// Crear detalles de un pedido
+Order.createDetails = (pedido_id, producto_id, cantidad, precio) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO detalles_pedidos (pedido_id, producto_id, cantidad, precio) VALUES (?, ?, ?, ?)';
+    connection.query(query, [pedido_id, producto_id, cantidad, precio], (err, results) => {
+      if (err) return reject(err);
+      resolve(results.insertId);
+    });
+  });
+};
+
+// Obtener detalles de un pedido específico
+Order.getDetails = (pedido_id) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT dp.*, p.nombre, p.imagen 
+      FROM detalles_pedidos dp
+      JOIN productos p ON dp.producto_id = p.id
+      WHERE dp.pedido_id = ?
+    `;
+    connection.query(query, [pedido_id], (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
+
 module.exports = Order;

@@ -26,3 +26,5 @@ export const fetchProduct = (id) => API.get(`/products/${id}`);
 export const createProduct = (product) => API.post('/products', product);
 export const updateProduct = (id, product) => API.put(`/products/${id}`, product);
 export const deleteProduct = (id) => API.delete(`/products/${id}`);
+export const createOrder = (orders) => API.post('/orders', orders);
+export const getUserOrders = (userId) => API.get(`/orders/user/${userId}`);

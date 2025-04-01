@@ -1,13 +1,33 @@
 import { useCart } from '../context/CartContext'; // Contexto del carrito
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { createOrder } from '../api/api'
 import '../styles/Checkout.css';
 
 export const Checkout = () => {
   const { cart, getCartTotal, clearCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-const pago =() => {
-  alert('¡Compra realizada con éxito!');
-  clearCart();
-}
+  const handleSubmit = async () => {
+    try {
+      const orderData = {
+        usuario_id: user,
+        total: getCartTotal(),
+        items: cart.map(item => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          price: item.product.precio
+        }))
+      };
+      console.log(orderData)
+      await createOrder(orderData);
+      clearCart();
+      navigate('/orders/success');
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
 
   // Función para obtener la imagen segura (maneja ambos formatos de carrito)
   const getItemImage = (item) => { // Se usa item.nombre si el formato es directo item = { nombre: "Zapatos", precio: 50 } / se usa item.product?.nombre si esta dentro item = { product: { nombre: "Camisa" }, quantity: 2 } y no da directo el error para no romper la aplicacion
@@ -16,6 +36,7 @@ const pago =() => {
 
   // Función para obtener el nombre seguro
   const getItemName = (item) => {
+    console.log(user)
     return item.nombre || item.product?.nombre || 'Producto sin nombre';
   };
 
@@ -44,7 +65,7 @@ const pago =() => {
       <div className="checkout-total">
         <h3>Total: ${getCartTotal()}</h3>
       </div>
-      <button onClick={pago} className="checkout-button">Pagar Ahora</button>
+      <button onClick={handleSubmit} className="checkout-button">Pagar Ahora</button>
     </div>
   );
 };

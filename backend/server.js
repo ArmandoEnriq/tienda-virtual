@@ -7,6 +7,7 @@ const connectMongo = require('./database/mongodb'); // Conexion MongoDB
 // Routes
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes')
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 // Rutas
+app.use('/api/orders', orderRoutes)
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 

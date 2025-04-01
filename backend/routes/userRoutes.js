@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => { // Creamos una ruta para post con su
     }
     // Generar un token JWT
     const token = User.generateToken(user); // Usa el metodo de user para generar un token
-    res.json({ token, rol: user.rol }); // Devuelve el token en formato json
+    res.json({ token, rol: user.rol, id: user.id }); // Devuelve el token en formato json
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
