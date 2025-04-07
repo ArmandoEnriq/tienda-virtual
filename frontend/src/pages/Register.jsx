@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para cambiarte de pagina despues de una accion
+import { useNavigate, Link } from 'react-router-dom'; // Para cambiarte de pagina despues de una accion
 import { registerUser } from '../api/api'; // Usamos la api para register
 import '../styles/Auth.css';
 
@@ -8,10 +8,15 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden');
+      return;
+    }
     try {
       await registerUser({ nombre, email, password });
       navigate('/login'); // Redirigir a login después del registro
@@ -23,7 +28,7 @@ export const Register = () => {
   return (
     <div className="auth-container">
       <h2>Registrarse</h2>
-      {error && <p className="error">{error}</p>} {/* Es una forma de if , si hay un error entonces muestra el <p> */}
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -45,9 +50,30 @@ export const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          minLength="6"
         />
-        <button type="submit">Registrarse</button>
+        <input
+          type="password"
+          placeholder="Vuelve a escribir tu contraseña"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          minLength="6"
+        />
+        {password && confirmPassword && password !== confirmPassword && (
+          <p className="error">Las contraseñas no coinciden</p>
+        )}
+        <button 
+          type="submit"
+          disabled={password && confirmPassword && password !== confirmPassword}
+        >
+          Registrarse
+        </button>
+        <p className="auth-link">
+          ¿Ya tienes cuenta?{' '}
+          <Link to="/login">Inicia sesión aquí</Link>
+        </p>
       </form>
     </div>
   );
-};
+}

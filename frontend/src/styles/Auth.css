@@ -46,3 +46,18 @@
     text-align: center;
     margin-bottom: 1rem;
   }
+  .auth-link {
+    margin-top: 15px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .auth-link a {
+    color: #2c83c3;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .auth-link a:hover {
+    text-decoration: underline;
+  }

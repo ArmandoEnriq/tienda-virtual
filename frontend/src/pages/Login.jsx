@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../api/api';
 import '../styles/Auth.css';
 import { useAuth } from '../context/AuthContext';
@@ -30,6 +30,10 @@ export const Login = () => {
         <input type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit">Ingresar</button>
+        <p className="auth-link">
+        ¿No tienes cuenta?{' '}
+        <Link to="/Register">Regístrate aquí</Link>
+      </p>
       </form>
     </div>
   );
